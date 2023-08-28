@@ -4,9 +4,6 @@ import random
 import re
 import sys
 import string
-import discord
-from dotenv import load_dotenv
-from emoji import emojize
 
 def addPronounSet():
     # each pronoun is keyed by subjective case.
@@ -30,6 +27,18 @@ def addPronounSet():
                 return
     except: 
         return
+
+def caseParser(word, replacement):
+    shorterPronoun = word if len(word)<= len(replacement) else replacement
+    longerPronoun = replacement if len(word)<= len(replacement) else word
+    holdingList = []
+    for index in range(len(shorterPronoun)):
+        print(word[index])
+        holdingList.append(replacement[index].upper() if word[index].isupper() ==True and word[index].isalpha() ==True else replacement[index])
+    lengthShorter = len(shorterPronoun)
+    if len(longerPronoun)> lengthShorter:
+        holdingList.append(longerPronoun[lengthShorter:])
+    return "".join(holdingList)
 
 def changeUserPronouns(username):
     # want to draw username from the user accessing it & not allow them to change other people's pronouns
@@ -107,34 +116,34 @@ def showExistingPronouns():
     for label in pronounPresets:
         print(label+": ")
         for pronoun in pronounPresets[label]:
-            print("\t"+pronoun)
-    
+            print("\t"+pronoun)   
 
 def switcheroo(oldPronounKey, newPronounKey, message):
     newMessage = []
     for word in message:
-        noPunct = word.strip(string.punctuation)
-        lowercaseWord = word.lower()
-        lowerNoPunct = lowercaseWord.strip(string.punctuation)
+        lowerNoPunct = word.strip(string.punctuation).lower()
         replacement = nounSwap(lowerNoPunct, oldPronounKey, newPronounKey)
-        if noPunct != word:
-            index1 = word.find(noPunct)
-            index2 = index1 + len(noPunct)
-            if index1 == 0:
-                word = replacement + word[index2:]
-            elif index2 == 0:
-                word = replacement + word[index2:]
-            else:
-                word = word[:index1] + replacement + word[index2:]
-        elif lowercaseWord != word:
-            if noPunct.isupper() == True:
-                word = replacement.upper()
-            elif noPunct[0].isupper() == True and noPunct[1:].islower() == True:
-                word = replacement[0].upper()+replacement[1:]
+        if replacement != lowerNoPunct:
+            noPunct = word.strip(string.punctuation)
+            lowercaseWord = word.lower()
+            if noPunct != word:
+                index1 = word.find(noPunct)
+                index2 = index1 + len(noPunct)
+                if index1 == 0:
+                    word = replacement + word[index2:]
+                elif index2 == 0:
+                    word = replacement + word[index2:]
+                else:
+                    word = word[:index1] + replacement + word[index2:]
+            elif lowercaseWord != word:
+                if noPunct.isupper() == True:
+                    word = replacement.upper()
+                elif noPunct[0].isupper() == True and noPunct[1:].islower() == True:
+                    word = replacement[0].upper()+replacement[1:]
+                else:
+                    word = caseParser(word, replacement)
             else:
                 word = replacement
-        else:
-            word = replacement
         newMessage.append(word)
     output = " ".join(newMessage)
     return output
@@ -174,6 +183,6 @@ if __name__== "__main__":
     #userPronouns = {"test1": ["ze", 0], "test2": ["he", "they", 1]}
     #oldPronounKey = "he"
     #newPronounKey = "ze"
-    userLoop()
+    
 
 

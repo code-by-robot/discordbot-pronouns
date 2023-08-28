@@ -1,8 +1,7 @@
 import os
 import discord
-import pronounSwapper
+import swapper.pronounSwapper
 import asyncio
-from discord import app_commands
 from dotenv import load_dotenv
 
 load_dotenv()
