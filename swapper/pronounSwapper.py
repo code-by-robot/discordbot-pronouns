@@ -72,7 +72,15 @@ def changeUserPronouns(username):
     return
 
 def findPronouns(username):
-    print(userPronouns[username])
+    try:
+        for pronoun in userPronouns[username]:
+            if pronoun.isnumeric():
+                swapMessage = "User swaps between the above pronouns." if pronoun == 1 else "User prefers the first pronoun listed."
+                print(swapMessage)
+            else:
+                print(pronounPresets[pronoun])
+    except:
+        print(f"{username} does not have listed pronouns or is not in this server.")
 
 def nounSwap(word, oldPronounKey, newPronounKey):
     # each pronoun is keyed by subjective case.
