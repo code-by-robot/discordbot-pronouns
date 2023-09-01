@@ -9,7 +9,7 @@ Current capabilities - now as a Discord bot:
    c) mIxEd CaSE
 
 ![image](https://github.com/code-by-robot/discordbot-pronouns/assets/96454399/2547a707-3029-4f12-8072-961278a70318)
-
+The above shows the original message and bot message. The bot will delete the original message - it was kept to show format of input required for the bot.
 
 Future plans:
 1) Assigning existing pronoun set(s) to yourself.
