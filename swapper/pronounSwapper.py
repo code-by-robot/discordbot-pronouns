@@ -5,6 +5,15 @@ import re
 import sys
 import string
 
+pronounPresets = {"they": ["they", "them", "their", "theirself"], "she": ["she", "her", "hers", "herself"], 
+                      "he": ["he", "him", "his", "hisself"], "ze": ["ze", "hir", "hirs", "hirself"]}
+oldPronounKey = ""
+newPronounKey = ""
+userPronouns = {}
+validYesses = ["Y", "Yes", "y", "yes"]
+initialCommand = ""
+username = ""
+
 def addPronounSet():
     # each pronoun is keyed by subjective case.
     # the order of the pronouns in the value is subjective, objective, possessive, reflexive.
@@ -93,10 +102,10 @@ def nounSwap(word, oldPronounKey, newPronounKey):
     except ValueError:
         return word
 
-def processMessage(oldPronounKey, newPronounKey):
-    message = input().split()
+def processMessage(oldPronounKey, newPronounKey, message):
+    #message = input() - from command line prompt functionality
     newMessage = switcheroo(oldPronounKey, newPronounKey, message)
-    print(newMessage)
+    return newMessage
 
 def pythonInput():
     correct = False
@@ -128,7 +137,8 @@ def showExistingPronouns():
 
 def switcheroo(oldPronounKey, newPronounKey, message):
     newMessage = []
-    for word in message:
+    words = message.split(' ')
+    for word in words:
         lowerNoPunct = word.strip(string.punctuation).lower()
         replacement = nounSwap(lowerNoPunct, oldPronounKey, newPronounKey)
         if replacement != lowerNoPunct:
@@ -177,7 +187,7 @@ def userLoop():
 
 
 
-if __name__== "__main__":
+'''if __name__== "__main__":
     pronounPresets = {"they": ["they", "them", "their", "theirself"], "she": ["she", "her", "hers", "herself"], 
                       "he": ["he", "him", "his", "hisself"], "ze": ["ze", "hir", "hirs", "hirself"]}
     oldPronounKey = ""
@@ -185,7 +195,7 @@ if __name__== "__main__":
     userPronouns = {}
     validYesses = ["Y", "Yes", "y", "yes"]
     initialCommand = ""
-    username = ""
+    username = ""'''
 
     #Tesing variables
     #userPronouns = {"test1": ["ze", 0], "test2": ["he", "they", 1]}
