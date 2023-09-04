@@ -6,7 +6,7 @@ import sys
 import string
 
 pronounPresets = {"they": ["they", "them", "their", "theirself"], "she": ["she", "her", "hers", "herself"], 
-                      "he": ["he", "him", "his", "hisself"], "ze": ["ze", "hir", "hirs", "hirself"]}
+                      "he": ["he", "him", "his", "himself"], "ze": ["ze", "hir", "hirs", "hirself"]}
 oldPronounKey = ""
 newPronounKey = ""
 userPronouns = {}
