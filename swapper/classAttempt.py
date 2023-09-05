@@ -5,31 +5,35 @@ import re
 import sys
 import string
 
-'''pronounPresets = {"they": ["they", "them", "their", "theirself"], "she": ["she", "her", "hers", "herself"], 
+class Pronoun:
+
+    def __init__(self, subjective, objective, possessive, reflexive):
+        self.key = subjective
+        self.subjective = subjective
+        self.objective = objective
+        self.possessive = possessive
+        self.reflexive = reflexive
+        pronounPresets[self.key] = [self.subjective, self.objective, self.possessive, self.reflexive]
+
+
+
+pronounPresets = {"they": ["they", "them", "their", "theirself"], "she": ["she", "her", "hers", "herself"], 
                       "he": ["he", "him", "his", "himself"], "ze": ["ze", "hir", "hirs", "hirself"]}
-oldPronounKey = ""
+
+newnoun = Pronoun("it", "it", "its", "itself")
+print(pronounPresets)
+'''oldPronounKey = ""
 newPronounKey = ""
 userPronouns = {}
 validYesses = ["Y", "Yes", "y", "yes"]
 initialCommand = ""
-username = ""'''
+username = ""
 
-def addPronounSet(newnouns, emoji, pronounPresets):
+def addPronounSet():
     # each pronoun is keyed by subjective case.
     # the order of the pronouns in the value is subjective, objective, possessive, reflexive.
-
-    if newnouns not in pronounPresets.values():
-        key = emoji
-        if key in pronounPresets.keys():
-            return emoji       
-        pronounPresets.update({key: newnouns})
-        return pronounPresets
-    else:
-        return
-
-
-    # python console code commented out below:
-    '''try:
+    newnouns = pythonInput()
+    try:
         if newnouns not in pronounPresets.values():
             key = newnouns[0]
             altCounter = 0
@@ -46,7 +50,7 @@ def addPronounSet(newnouns, emoji, pronounPresets):
             else:
                 return
     except: 
-        return'''
+        return
 
 def caseParser(word, replacement):
     shorterPronoun = word if len(word)<= len(replacement) else replacement
@@ -101,16 +105,6 @@ def findPronouns(username):
                 print(pronounPresets[pronoun])
     except:
         print(f"{username} does not have listed pronouns or is not in this server.")
-
-def makePronounMessage(pronounDict):
-    message = []
-    for emoji in pronounDict.keys():
-        pronSet = []
-        for pronouns in pronounDict[emoji]:
-            pronSet.append(pronouns)
-        message.append(emoji+ " - "+", ".join(pronSet))
-    formattedMessage = "\n".join(message)
-    return formattedMessage
 
 def nounSwap(word, oldPronounKey, newPronounKey):
     # each pronoun is keyed by subjective case.
@@ -208,7 +202,7 @@ def userLoop():
 
 
 
-'''if __name__== "__main__":
+if __name__== "__main__":
     pronounPresets = {"they": ["they", "them", "their", "theirself"], "she": ["she", "her", "hers", "herself"], 
                       "he": ["he", "him", "his", "hisself"], "ze": ["ze", "hir", "hirs", "hirself"]}
     oldPronounKey = ""
